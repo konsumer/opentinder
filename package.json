@@ -1,0 +1,52 @@
+{
+  "name": "opentinder",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Desktop client for tinder",
+  "keywords": [],
+  "window": {
+    "icon": "app/images/icon.png",
+    "toolbar": false,
+    "frame": true,
+    "width": 800,
+    "height": 600,
+    "position": "center",
+    "resizable": true
+  },
+  "webkit": {
+    "plugin": false
+  },
+  "main": "app/index.html",
+  "dependencies": {
+    "flux": "^2.0.3",
+    "react": "^0.13.0",
+    "react-router": "^0.13.3",
+    "request": "^2.58.0",
+    "tinderjs": "^1.0.8"
+  },
+  "devDependencies": {
+    "babel-runtime": "^5.6.15",
+    "babelify": "^6.1.2",
+    "browserify": "^7.0.0",
+    "node-webkit-builder": "^0.4.0",
+    "reactify": "^0.17.1",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify app/jsx/index.js -o app/bundle.js -v -t reactify -t babelify",
+    "app": "nwbuild --run .",
+    "build": "./build/build"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        },
+        "babelify",
+        {}
+      ]
+    ]
+  }
+}
