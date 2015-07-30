@@ -6,7 +6,7 @@
   "keywords": [],
   "window": {
     "icon": "app/images/icon.png",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -28,7 +28,7 @@
     "babel-runtime": "^5.6.15",
     "babelify": "^6.1.2",
     "browserify": "^7.0.0",
-    "node-webkit-builder": "^0.4.0",
+    "node-webkit-builder": "^1.0.13",
     "reactify": "^0.17.1",
     "watchify": "^2.1.1"
   },
