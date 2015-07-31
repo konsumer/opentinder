@@ -6,5 +6,5 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 rm -rf "${DIR}/cache" && mkdir "${DIR}/cache" && cd "${DIR}/cache" &&
 cp -R "../../app" "../../package.json" . &&
 npm install --production &&
-browserify app/jsx/index.jsx -o app/bundle.js -t reactify -t babelify &&
+browserify app/jsx/index.js -o app/bundle.js -t reactify -t babelify &&
 nwbuild . -o ../builds -p win,osx,linux32,linux64

@@ -366,21 +366,17 @@ hr {
 /* App-specific
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-html, body {
+html, body, #content {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height:100%;
 }
 
 .App.loading {
-  position:absolute;
-  top: 50%;
+  padding-top: 50vh;
   text-align: center;
-  width: 100%;
-}
-
-#topbar {
-  background: #333;
-  color: #ccc;
+  width: 100vw;
 }
 
 .Match {
@@ -389,14 +385,6 @@ html, body {
   background-size: cover;
   display: inline-block;
   position:relative;
-}
-
-.icon-heart, .icon-heart-broken {
-  color: #ff2222;
-}
-
-.icon-heart:hover, .icon-heart-broken:hover {
-  color: #ff0000;
 }
 
 .Match button {
@@ -436,5 +424,32 @@ html, body {
 
 .Match .name {
 
+}
+
+#topbar {
+  background: #333;
+  color: #ccc;
+}
+
+.icon-heart, .icon-heart-broken {
+  color: #ff2222;
+}
+
+.icon-heart:hover, .icon-heart-broken:hover {
+  color: #ff0000;
+}
+
+.friends img {
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+@keyframes pound {
+  to { transform: scale(1.4); }
+}
+
+.pounding {
+  animation: pound .25s infinite alternate;
+  transform-origin: center;
 }
 
