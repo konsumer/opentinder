@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import data from './DataService'
+import data from '../DataService'
 
 const t = React.PropTypes
 

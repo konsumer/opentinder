@@ -33,7 +33,7 @@
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "start": "watchify app/jsx/index.js -o app/bundle.js -v -t reactify -t babelify",
+    "start": "watchify app/js/index.js -o app/bundle.js -v -t reactify -t babelify",
     "app": "nwbuild --run .",
     "build": "./build/build"
   },

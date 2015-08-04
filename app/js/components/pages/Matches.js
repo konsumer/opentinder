@@ -1,24 +1,27 @@
 import React, {Component} from 'react'
-import data from './DataService'
-import Match from './Match'
+import data from '../../DataService'
+import Match from '../Match'
 
-export default class App extends Component {
+export default class Matches extends Component {
   constructor (props) {
     super(props)
     this.onDoneWith = this.onDoneWith.bind(this)
     this.getMatches = this.getMatches.bind(this)
     this.state = {
-      me: false,
       matches: []
     }
-    data.login((err, me) => {
+    this.getMatches()
+
+    data.getUpdates((err, updates) => {
       if (err) throw err
-      this.setState({me: me})
-      this.getMatches()
+      console.log('updates', updates)
+    })
+    data.getHistory((err, history) => {
+      if (err) throw err
+      console.log('history', history)
     })
   }
   getMatches (replace) {
-    console.log(replace)
     if (replace) { // replace a single match
       var i = this.state.matches.map((m) => { return m._id }).indexOf(replace)
       if (i !== -1) {
@@ -27,7 +30,6 @@ export default class App extends Component {
           var matches = this.state.matches.slice()
           matches.splice(i, 1, r.results[0])
           this.setState({matches: matches.concat(r.results.slice(1))})
-          // this.forceUpdate()
         })
       }else{
         console.log('not found')
@@ -36,7 +38,6 @@ export default class App extends Component {
       data.getRecommendations(10, (err, r) => {
         if (err) throw err
         this.setState({matches: this.state.matches.concat(r.results)})
-        // this.forceUpdate()
       })
     }
   }
@@ -46,11 +47,11 @@ export default class App extends Component {
   }
   render () {
     return this.state.matches.length ? (
-      <div className='App'>
+      <div className='Matches'>
         {this.state.matches.map((match) => {
           return <Match key={match._id} onLike={this.onDoneWith} onPass={this.onDoneWith} match={match} />
         })}
       </div>
-    ) : (<div className='App loading'>Finding matches for you.</div>)
+    ) : (<div className='Matches loading'>Finding matches for you.</div>)
   }
 }

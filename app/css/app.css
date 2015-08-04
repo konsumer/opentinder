@@ -373,10 +373,45 @@ html, body, #content {
   height:100%;
 }
 
-.App.loading {
-  padding-top: 50vh;
+body{
+  overflow: hidden;
+}
+
+#content {
+  overflow-y: scroll;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.loading {
   text-align: center;
-  width: 100vw;
+  width: 100%;
+  position:absolute;
+  z-index: 101;
+  top:50vh;
+  left:0;
+}
+
+.Toolbar {
+  background: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px;
+  z-index: 100;
+  opacity: 0.05;
+  -webkit-transition: opacity 0.5s ease-in;
+}
+
+.Toolbar a {
+  color: #fff;
+  text-decoration:none;
+  margin-right: 10px;
+}
+
+.Toolbar:hover {
+  opacity: 0.5;
 }
 
 .Match {
@@ -426,9 +461,8 @@ html, body, #content {
 
 }
 
-#topbar {
-  background: #333;
-  color: #ccc;
+@-webkit-keyframes pound {
+  to { transform: scale(1.1); }
 }
 
 .icon-heart, .icon-heart-broken {
@@ -439,17 +473,15 @@ html, body, #content {
   color: #ff0000;
 }
 
+.icon-heart:hover {
+  -webkit-animation: pound .25s infinite alternate;
+  -webkit-transform-origin: center;
+}
+
 .friends img {
   border-radius: 50%;
   opacity: 0.5;
 }
 
-@keyframes pound {
-  to { transform: scale(1.4); }
-}
 
-.pounding {
-  animation: pound .25s infinite alternate;
-  transform-origin: center;
-}
 
