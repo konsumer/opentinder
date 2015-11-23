@@ -60,7 +60,7 @@ export default class Match extends Component {
 
   render () {
     return (
-      <div className='Match' style={{backgroundImage: `url(${this.props.match.photos[this.state.img].url})`}}>
+      <div className='Match' style={{backgroundImage: `url(${this.props.match.photos[this.state.img].processedFiles[0].url})`}}>
         <button onClick={this.onLike(this.props.match._id)}><i className='icon-heart'/> like</button>
         <button onClick={this.onPass(this.props.match._id)}><i className='icon-heart-broken'/> unlike</button>
         <button disabled={this.state.img === 0} onClick={this.onPrevious}><i className='icon-arrow-left'/> previous</button>
