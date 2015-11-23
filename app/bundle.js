@@ -319,16 +319,26 @@ var Root = (function (_Component) {
     _classCallCheck(this, Root);
 
     _get(Object.getPrototypeOf(Root.prototype), 'constructor', this).call(this, props);
+    this.zap = this.zap.bind(this);
+
     this.state = { me: null };
+
     _jstinder2['default'].login().then(function (me) {
       _this.setState({ me: me });
     });
   }
 
   _createClass(Root, [{
+    key: 'zap',
+    value: function zap(e) {
+      e.preventDefault();
+      window.localStorage.matches = '[]';
+      window.location = '';
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _jstinder2['default'].token ? _react2['default'].createElement("div", { className: "Root" }, _react2['default'].createElement("div", { className: "Toolbar" }, _react2['default'].createElement(_reactRouter.Link, { to: "/" }, "Matches"), _react2['default'].createElement(_reactRouter.Link, { to: "/messages" }, "Messages")), _react2['default'].createElement(_reactRouter.RouteHandler, null)) : _react2['default'].createElement("div", { className: "loading" }, "Logging you in with Facebook.");
+      return _jstinder2['default'].token ? _react2['default'].createElement("div", { className: "Root" }, _react2['default'].createElement("div", { className: "Toolbar" }, _react2['default'].createElement(_reactRouter.Link, { to: "/" }, "Matches"), _react2['default'].createElement("a", { href: "#zap", onClick: this.zap }, "Zap"), _react2['default'].createElement(_reactRouter.Link, { to: "/messages" }, "Messages")), _react2['default'].createElement(_reactRouter.RouteHandler, null)) : _react2['default'].createElement("div", { className: "loading" }, "Logging you in with Facebook.");
     }
   }]);
 
