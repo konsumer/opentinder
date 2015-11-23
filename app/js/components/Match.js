@@ -58,6 +58,12 @@ export default class Match extends Component {
     }
   }
 
+  search (url) {
+    return function (e) {
+      window.open('https://www.google.com/searchbyimage?&image_url=' + url)
+    }
+  }
+
   render () {
     return (
       <div className='Match' style={{backgroundImage: `url(${this.props.match.photos[this.state.img].processedFiles[0].url})`}}>
@@ -65,6 +71,7 @@ export default class Match extends Component {
         <button onClick={this.onPass(this.props.match._id)}><i className='icon-heart-broken'/> unlike</button>
         <button disabled={this.state.img === 0} onClick={this.onPrevious}><i className='icon-arrow-left'/> previous</button>
         <button disabled={this.state.img === (this.props.match.photos.length - 1)} onClick={this.onNext}><i className='icon-arrow-right'/> next</button>
+        <button onClick={this.search(this.props.match.photos[this.state.img].url)}><i className='icon-search'/> search</button>
         { this.props.match.bio ? <div className='bio'>{this.props.match.bio}</div> : '' }
         <div className='info'>{this.props.match.name} {getAge(this.props.match.birth_date)}</div>
         <div className='friends'>
