@@ -3,7 +3,7 @@
 # Build script for POSIX environments
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-rm -rf "${DIR}/cache" && mkdir "${DIR}/cache" && cd "${DIR}/cache" &&
+rm -rf "${DIR}/cache" "${DIR}/builds" && mkdir "${DIR}/cache" && cd "${DIR}/cache" &&
 cp -R "../../app" "../../package.json" . &&
 npm install --production &&
 browserify app/js/index.js -o app/bundle.js -t reactify -t babelify &&
