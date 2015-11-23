@@ -4,19 +4,19 @@ import Router, {Route, Link, DefaultRoute, RouteHandler} from 'react-router'
 import Matches from './components/pages/Matches'
 import Messages from './components/pages/Messages'
 
-import data from './DataService'
+import tinder from 'jstinder'
 
 export default class Root extends Component {
   constructor (props) {
     super(props)
-    data.login((err, me) => {
-      if (err) throw err
-      data.me = me
-      this.forceUpdate()
-    })
+    this.state = {me: null}
+    tinder.login()
+      .then((me) => {
+        this.setState({me: me})
+      })
   }
   render () {
-    return data.me ? (
+    return tinder.token ? (
       <div className='Root'>
         <div className='Toolbar'>
           <Link to='/'>Matches</Link>
@@ -33,7 +33,7 @@ export default class Root extends Component {
 Router.run((
   <Route handler={Root}>
     <DefaultRoute handler={Matches} />
-    <Route path="/messages" handler={Messages} />
+    <Route path='/messages' handler={Messages} />
   </Route>
 ), function (Handler) {
   React.render(<Handler/>, document.getElementById('content'))

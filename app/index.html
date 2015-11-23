@@ -7,7 +7,21 @@
   </head>
   <body>
     <section id="content"></section>
-    <script src="shim.js"></script>
-    <script src="bundle.js"></script>
+<script>
+var gui = require('nw.gui')
+var win = gui.Window.get()
+// win.showDevTools()
+
+// make copy/paste work on OSX
+var nativeMenuBar = new gui.Menu({ type: 'menubar' })
+try {
+  nativeMenuBar.createMacBuiltin('opentinder')
+  win.menu = nativeMenuBar
+} catch (ex) {
+  console.log(ex.message)
+}
+</script>
+<script src="shim.js"></script>
+<script src="bundle.js"></script>
   </body>
 </html>

@@ -22,7 +22,7 @@
     "react": "^0.13.0",
     "react-router": "^0.13.3",
     "request": "^2.58.0",
-    "tinderjs": "^1.0.8"
+    "jstinder": "github:konsumer/jstinder"
   },
   "devDependencies": {
     "babel-runtime": "^5.6.15",
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "watchify app/js/index.js -o app/bundle.js -v -t reactify -t babelify",
-    "app": "nwbuild --run .",
+    "app": "nwbuild -v 0.12.3 -r .",
     "build": "./build/build"
   },
   "browserify": {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import data from '../DataService'
+import tinder from 'jstinder'
 
 const t = React.PropTypes
 
@@ -27,31 +27,29 @@ export default class Match extends Component {
     this.onNext = this.onNext.bind(this)
   }
   onLike (id) {
-    var props = this.props
     return function (e) {
-      data.like(id, (err, info) => {
-        props.onLike(err, props.match, info)
-      })
+      tinder.like(id)
+        .then((info) => {
+
+        })
     }
   }
   onPass (id) {
-    var props = this.props
     return function (e) {
-      data.pass(id, (err, info) => {
-        props.onPass(err, props.match, info)
-      })
+      tinder.pass(id)
+        .then((info) => {
+
+        })
     }
   }
   onPrevious (e) {
     if (this.state.img > 0) {
-      this.state.img = this.state.img - 1
-      this.forceUpdate()
+      this.setState({img: this.state.img - 1})
     }
   }
   onNext (e) {
     if (this.state.img < this.props.match.photos.length) {
-      this.state.img = this.state.img + 1
-      this.forceUpdate()
+      this.setState({img: this.state.img + 1})
     }
   }
   render () {
@@ -76,12 +74,8 @@ export default class Match extends Component {
 }
 
 Match.propTypes = {
-  onLike: t.func,
-  onPass: t.func,
   match: t.object.isRequired
 }
 
 Match.defaultProps = {
-  onLike: (err, match, info) => {},
-  onPass: (err, match, info) => {}
 }
