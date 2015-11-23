@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import tinder from 'jstinder'
 import messages from '../messages'
 
+const gui = window.nativeRequire('nw.gui')
+
 function getAge (dateString) {
   var today = new Date()
   var birthDate = new Date(dateString)
@@ -58,9 +60,15 @@ export default class Match extends Component {
     }
   }
 
-  search (url) {
+  search (imgurl) {
     return function (e) {
-      window.open('https://www.google.com/searchbyimage?&image_url=' + url)
+      gui.Shell.openExternal('https://www.google.com/searchbyimage?&image_url=' + imgurl)
+    }
+  }
+
+  fb (id) {
+    return function (e) {
+      gui.Shell.openExternal('https://facebook.com/' + id)
     }
   }
 
@@ -77,7 +85,7 @@ export default class Match extends Component {
         <div className='friends'>
           {this.props.match ? this.props.match.common_friends.map((friend, i) => {
             if (friend) {
-              return (<img key={i} src={`http://graph.facebook.com/${friend}/picture?type=square`} />)
+              return (<img onClick={this.fb(friend)} key={i} src={`http://graph.facebook.com/${friend}/picture?type=square`} />)
             }
           }) : null}
         </div>

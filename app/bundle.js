@@ -27,6 +27,8 @@ var _messages = require('../messages');
 
 var _messages2 = _interopRequireDefault(_messages);
 
+var gui = window.nativeRequire('nw.gui');
+
 function getAge(dateString) {
   var today = new Date();
   var birthDate = new Date(dateString);
@@ -90,17 +92,26 @@ var Match = (function (_Component) {
     }
   }, {
     key: 'search',
-    value: function search(url) {
+    value: function search(imgurl) {
       return function (e) {
-        window.open('https://www.google.com/searchbyimage?&image_url=' + url);
+        gui.Shell.openExternal('https://www.google.com/searchbyimage?&image_url=' + imgurl);
+      };
+    }
+  }, {
+    key: 'fb',
+    value: function fb(id) {
+      return function (e) {
+        gui.Shell.openExternal('https://facebook.com/' + id);
       };
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this = this;
+
       return _react2['default'].createElement("div", { className: "Match", style: { backgroundImage: 'url(' + this.props.match.photos[this.state.img].processedFiles[0].url + ')' } }, _react2['default'].createElement("button", { onClick: this.onLike(this.props.match._id) }, _react2['default'].createElement("i", { className: "icon-heart" }), " like"), _react2['default'].createElement("button", { onClick: this.onPass(this.props.match._id) }, _react2['default'].createElement("i", { className: "icon-heart-broken" }), " unlike"), _react2['default'].createElement("button", { disabled: this.state.img === 0, onClick: this.onPrevious }, _react2['default'].createElement("i", { className: "icon-arrow-left" }), " previous"), _react2['default'].createElement("button", { disabled: this.state.img === this.props.match.photos.length - 1, onClick: this.onNext }, _react2['default'].createElement("i", { className: "icon-arrow-right" }), " next"), _react2['default'].createElement("button", { onClick: this.search(this.props.match.photos[this.state.img].url) }, _react2['default'].createElement("i", { className: "icon-search" }), " search"), this.props.match.bio ? _react2['default'].createElement("div", { className: "bio" }, this.props.match.bio) : '', _react2['default'].createElement("div", { className: "info" }, this.props.match.name, " ", getAge(this.props.match.birth_date)), _react2['default'].createElement("div", { className: "friends" }, this.props.match ? this.props.match.common_friends.map(function (friend, i) {
         if (friend) {
-          return _react2['default'].createElement("img", { key: i, src: 'http://graph.facebook.com/' + friend + '/picture?type=square' });
+          return _react2['default'].createElement("img", { onClick: _this.fb(friend), key: i, src: 'http://graph.facebook.com/' + friend + '/picture?type=square' });
         }
       }) : null));
     }
