@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 
 import tinder from 'jstinder'
+import data from '../data'
 
-const t = React.PropTypes
-
-var today = new Date()
 function getAge (dateString) {
+  var today = new Date()
   var birthDate = new Date(dateString)
   var age = today.getFullYear() - birthDate.getFullYear()
   var m = today.getMonth() - birthDate.getMonth()
@@ -26,32 +25,39 @@ export default class Match extends Component {
     this.onPrevious = this.onPrevious.bind(this)
     this.onNext = this.onNext.bind(this)
   }
+
   onLike (id) {
     return function (e) {
       tinder.like(id)
         .then((info) => {
-
+          info.id = id
+          data.emit('like', info)
         })
     }
   }
+
   onPass (id) {
     return function (e) {
       tinder.pass(id)
         .then((info) => {
-
+          info.id = id
+          data.emit('pass', info)
         })
     }
   }
+
   onPrevious (e) {
     if (this.state.img > 0) {
       this.setState({img: this.state.img - 1})
     }
   }
+
   onNext (e) {
     if (this.state.img < this.props.match.photos.length) {
       this.setState({img: this.state.img + 1})
     }
   }
+
   render () {
     return (
       <div className='Match' style={{backgroundImage: `url(${this.props.match.photos[this.state.img].url})`}}>
@@ -74,7 +80,7 @@ export default class Match extends Component {
 }
 
 Match.propTypes = {
-  match: t.object.isRequired
+  match: React.PropTypes.object.isRequired
 }
 
 Match.defaultProps = {

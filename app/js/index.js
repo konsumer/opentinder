@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import Router, {Route, Link, DefaultRoute, RouteHandler} from 'react-router'
 
 import Matches from './components/pages/Matches'
@@ -15,6 +15,7 @@ export default class Root extends Component {
         this.setState({me: me})
       })
   }
+
   render () {
     return tinder.token ? (
       <div className='Root'>
