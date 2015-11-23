@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import tinder from 'jstinder'
 
-import data from '../../data'
+import messages from '../../messages'
 import Match from '../Match'
 
 export default class Matches extends Component {
@@ -11,6 +11,7 @@ export default class Matches extends Component {
 
     this.removeMatch = this.removeMatch.bind(this)
     this.getMoreMatches = this.getMoreMatches.bind(this)
+    this.zap = this.zap.bind(this)
 
     this.state = {
       matches: window.localStorage.matches ? JSON.parse(window.localStorage.matches) : []
@@ -22,13 +23,15 @@ export default class Matches extends Component {
   }
 
   componentWillMount () {
-    data.on('like', this.removeMatch)
-    data.on('pass', this.removeMatch)
+    messages.on('like', this.removeMatch)
+    messages.on('pass', this.removeMatch)
+    messages.on('zap', this.zap)
   }
 
   componentWillUnmount () {
-    data.off('like', this.removeMatch)
-    data.off('pass', this.removeMatch)
+    messages.off('like', this.removeMatch)
+    messages.off('pass', this.removeMatch)
+    messages.off('zap', this.zap)
   }
 
   removeMatch (info) {
@@ -44,10 +47,15 @@ export default class Matches extends Component {
 
   getMoreMatches () {
     tinder.recommendations()
-        .then((matches) => {
-          this.setState({matches: this.state.matches.concat(matches)})
-          window.localStorage.matches = JSON.stringify(matches)
-        })
+      .then((matches) => {
+        this.setState({matches: this.state.matches.concat(matches)})
+        window.localStorage.matches = JSON.stringify(matches)
+      })
+  }
+
+  zap () {
+    this.setState({matches: []})
+    this.getMoreMatches()
   }
 
   render () {

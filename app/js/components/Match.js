@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import tinder from 'jstinder'
-import data from '../data'
+import messages from '../messages'
 
 function getAge (dateString) {
   var today = new Date()
@@ -31,7 +31,7 @@ export default class Match extends Component {
       tinder.like(id)
         .then((info) => {
           info.id = id
-          data.emit('like', info)
+          messages.emit('like', info)
         })
     }
   }
@@ -41,7 +41,7 @@ export default class Match extends Component {
       tinder.pass(id)
         .then((info) => {
           info.id = id
-          data.emit('pass', info)
+          messages.emit('pass', info)
         })
     }
   }
@@ -72,7 +72,7 @@ export default class Match extends Component {
             if (friend) {
               return (<img key={i} src={`http://graph.facebook.com/${friend}/picture?type=square`} />)
             }
-          }) : ''}
+          }) : null}
         </div>
       </div>
     )

@@ -23,9 +23,9 @@ var _jstinder = require('jstinder');
 
 var _jstinder2 = _interopRequireDefault(_jstinder);
 
-var _data = require('../data');
+var _messages = require('../messages');
 
-var _data2 = _interopRequireDefault(_data);
+var _messages2 = _interopRequireDefault(_messages);
 
 function getAge(dateString) {
   var today = new Date();
@@ -60,7 +60,7 @@ var Match = (function (_Component) {
       return function (e) {
         _jstinder2['default'].like(id).then(function (info) {
           info.id = id;
-          _data2['default'].emit('like', info);
+          _messages2['default'].emit('like', info);
         });
       };
     }
@@ -70,7 +70,7 @@ var Match = (function (_Component) {
       return function (e) {
         _jstinder2['default'].pass(id).then(function (info) {
           info.id = id;
-          _data2['default'].emit('pass', info);
+          _messages2['default'].emit('pass', info);
         });
       };
     }
@@ -95,7 +95,7 @@ var Match = (function (_Component) {
         if (friend) {
           return _react2['default'].createElement("img", { key: i, src: 'http://graph.facebook.com/' + friend + '/picture?type=square' });
         }
-      }) : ''));
+      }) : null));
     }
   }]);
 
@@ -111,7 +111,7 @@ Match.propTypes = {
 Match.defaultProps = {};
 module.exports = exports['default'];
 
-},{"../data":4,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237}],2:[function(require,module,exports){
+},{"../messages":5,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237}],2:[function(require,module,exports){
 'use strict';
 
 var _get = require('babel-runtime/helpers/get')['default'];
@@ -136,9 +136,9 @@ var _jstinder = require('jstinder');
 
 var _jstinder2 = _interopRequireDefault(_jstinder);
 
-var _data = require('../../data');
+var _messages = require('../../messages');
 
-var _data2 = _interopRequireDefault(_data);
+var _messages2 = _interopRequireDefault(_messages);
 
 var _Match = require('../Match');
 
@@ -154,6 +154,7 @@ var Matches = (function (_Component) {
 
     this.removeMatch = this.removeMatch.bind(this);
     this.getMoreMatches = this.getMoreMatches.bind(this);
+    this.zap = this.zap.bind(this);
 
     this.state = {
       matches: window.localStorage.matches ? JSON.parse(window.localStorage.matches) : []
@@ -167,14 +168,16 @@ var Matches = (function (_Component) {
   _createClass(Matches, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      _data2['default'].on('like', this.removeMatch);
-      _data2['default'].on('pass', this.removeMatch);
+      _messages2['default'].on('like', this.removeMatch);
+      _messages2['default'].on('pass', this.removeMatch);
+      _messages2['default'].on('zap', this.zap);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _data2['default'].off('like', this.removeMatch);
-      _data2['default'].off('pass', this.removeMatch);
+      _messages2['default'].off('like', this.removeMatch);
+      _messages2['default'].off('pass', this.removeMatch);
+      _messages2['default'].off('zap', this.zap);
     }
   }, {
     key: 'removeMatch',
@@ -199,6 +202,12 @@ var Matches = (function (_Component) {
       });
     }
   }, {
+    key: 'zap',
+    value: function zap() {
+      this.setState({ matches: [] });
+      this.getMoreMatches();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return this.state.matches.length ? _react2['default'].createElement("div", { className: "Matches" }, this.state.matches.map(function (match) {
@@ -213,7 +222,7 @@ var Matches = (function (_Component) {
 exports['default'] = Matches;
 module.exports = exports['default'];
 
-},{"../../data":4,"../Match":1,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237}],3:[function(require,module,exports){
+},{"../../messages":5,"../Match":1,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237}],3:[function(require,module,exports){
 "use strict";
 
 var _get = require("babel-runtime/helpers/get")["default"];
@@ -259,23 +268,6 @@ module.exports = exports["default"];
 },{"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"react":237}],4:[function(require,module,exports){
 'use strict';
 
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _emitonoff = require('emitonoff');
-
-var _emitonoff2 = _interopRequireDefault(_emitonoff);
-
-var data = (0, _emitonoff2['default'])();
-exports['default'] = data;
-module.exports = exports['default'];
-
-},{"babel-runtime/helpers/interop-require-default":14,"emitonoff":37}],5:[function(require,module,exports){
-'use strict';
-
 var _get = require('babel-runtime/helpers/get')['default'];
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -306,6 +298,10 @@ var _componentsPagesMessages = require('./components/pages/Messages');
 
 var _componentsPagesMessages2 = _interopRequireDefault(_componentsPagesMessages);
 
+var _messages = require('./messages');
+
+var _messages2 = _interopRequireDefault(_messages);
+
 var _jstinder = require('jstinder');
 
 var _jstinder2 = _interopRequireDefault(_jstinder);
@@ -332,8 +328,7 @@ var Root = (function (_Component) {
     key: 'zap',
     value: function zap(e) {
       e.preventDefault();
-      window.localStorage.matches = '[]';
-      window.location = '';
+      _messages2['default'].emit('zap');
     }
   }, {
     key: 'render',
@@ -352,7 +347,25 @@ _reactRouter2['default'].run(_react2['default'].createElement(_reactRouter.Route
 });
 module.exports = exports['default'];
 
-},{"./components/pages/Matches":2,"./components/pages/Messages":3,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237,"react-router":73}],6:[function(require,module,exports){
+},{"./components/pages/Matches":2,"./components/pages/Messages":3,"./messages":5,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/get":12,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"jstinder":42,"react":237,"react-router":73}],5:[function(require,module,exports){
+// handle app messaging with emitonoff
+'use strict';
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _emitonoff = require('emitonoff');
+
+var _emitonoff2 = _interopRequireDefault(_emitonoff);
+
+var data = (0, _emitonoff2['default'])();
+exports['default'] = data;
+module.exports = exports['default'];
+
+},{"babel-runtime/helpers/interop-require-default":14,"emitonoff":37}],6:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/create"), __esModule: true };
 },{"core-js/library/fn/object/create":16}],7:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/define-property"), __esModule: true };
@@ -25084,4 +25097,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[5]);
+},{}]},{},[4]);

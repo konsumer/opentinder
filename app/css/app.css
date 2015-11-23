@@ -478,6 +478,11 @@ body{
   -webkit-transform-origin: center;
 }
 
+.friends {
+  position: absolute;
+  bottom:0;
+}
+
 .friends img {
   border-radius: 50%;
   opacity: 0.5;

@@ -3,6 +3,7 @@ import Router, {Route, Link, DefaultRoute, RouteHandler} from 'react-router'
 
 import Matches from './components/pages/Matches'
 import Messages from './components/pages/Messages'
+import messages from './messages'
 
 import tinder from 'jstinder'
 
@@ -21,8 +22,7 @@ export default class Root extends Component {
 
   zap (e) {
     e.preventDefault()
-    window.localStorage.matches = '[]'
-    window.location = ''
+    messages.emit('zap')
   }
 
   render () {

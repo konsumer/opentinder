@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 export default class Messages extends Component {
   render () {
     return (
-      <div className="Messages">
+      <div className='Messages'>
         MESSAGES
       </div>
     )
