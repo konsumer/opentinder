@@ -28,3 +28,5 @@ node_modules
 
 build/builds
 build/cache
+
+.DS_Store
