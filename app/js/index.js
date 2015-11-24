@@ -10,7 +10,6 @@ import tinder from 'jstinder'
 export default class Root extends Component {
   constructor (props) {
     super(props)
-    this.zap = this.zap.bind(this)
 
     this.state = {me: null}
 

@@ -333,7 +333,6 @@ var Root = (function (_Component) {
     _classCallCheck(this, Root);
 
     _get(Object.getPrototypeOf(Root.prototype), 'constructor', this).call(this, props);
-    this.zap = this.zap.bind(this);
 
     this.state = { me: null };
 
