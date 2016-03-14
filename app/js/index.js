@@ -15,7 +15,7 @@ export default class Root extends Component {
 
     tinder.login()
       .then((me) => {
-        tinder.auth(me.token, me.id).then(function(){
+        tinder.auth(me.token, me.id).then(() => {
           this.setState({me: me})
         })
       })
